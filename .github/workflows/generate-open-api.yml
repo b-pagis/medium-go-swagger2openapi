@@ -1,0 +1,31 @@
+
+name: Generate Open API
+
+on:
+  push:
+    branches:
+    - master
+
+jobs:
+  convert:
+    runs-on: ubuntu-latest
+    env:
+      CI: true
+    services:
+      converter:
+        image: swaggerapi/swagger-converter
+        ports: 
+         - 8990:8080
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-go@v2
+        with:
+          go-version: '1.16.3'
+      - name: Setup swaggo
+        run: go get -u github.com/swaggo/swag/cmd/swag
+      - name: Convert swagger to open api
+        run:  ./convert-swagger-to-openapi.sh
+      - name: Step to deal with content
+        run:  cat docs/openapi.json
+      - name: Finishing notes
+        run: echo "now that you have openapi.json file you can upload it anywhere you like or create a resource from it"

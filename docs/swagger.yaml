@@ -1,0 +1,181 @@
+basePath: /api/v1
+definitions:
+  service.BigBoxRequest:
+    properties:
+      boxes:
+        items:
+          $ref: '#/definitions/service.Box'
+        type: array
+      if:
+        properties:
+          are:
+            properties:
+              scary:
+                type: string
+              some:
+                type: boolean
+              stuff:
+                properties:
+                  inside:
+                    type: boolean
+                type: object
+            type: object
+          there:
+            items:
+              type: string
+            type: array
+        type: object
+      what:
+        type: string
+    type: object
+  service.Box:
+    properties:
+      createdAt:
+        example: "2021-01-01T20:52:41.483612611Z"
+        type: string
+      isFragile:
+        example: true
+        type: boolean
+      price:
+        example: 1.23
+        type: number
+    type: object
+  service.BoxRequest:
+    properties:
+      isFragile:
+        example: true
+        type: boolean
+      price:
+        example: 1.23
+        type: number
+    type: object
+  service.BoxesResponse:
+    properties:
+      boxes:
+        items:
+          $ref: '#/definitions/service.Box'
+        type: array
+    type: object
+  service.Response:
+    properties:
+      code:
+        example: internalError
+        type: string
+      status:
+        example: success
+        type: string
+    type: object
+  service.SignInRequest:
+    properties:
+      password:
+        example: password
+        type: string
+      username:
+        example: demo
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  license:
+    name: ISC
+  title: Example Box Service
+  version: "1"
+paths:
+  /boxes:
+    get:
+      consumes:
+      - application/json
+      description: Returns a list of boxes
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/service.BoxesResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/service.Response'
+      summary: List all boxes
+      tags:
+      - box
+    post:
+      consumes:
+      - application/json
+      description: creates new box
+      parameters:
+      - description: New Box Request
+        in: body
+        name: boxRequest
+        required: true
+        schema:
+          $ref: '#/definitions/service.BoxRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/service.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/service.Response'
+      summary: Create new box
+      tags:
+      - box
+  /boxes/big:
+    post:
+      consumes:
+      - application/json
+      description: creates new Big box
+      parameters:
+      - description: New Big Box Request
+        in: body
+        name: boxRequest
+        required: true
+        schema:
+          $ref: '#/definitions/service.BigBoxRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/service.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/service.Response'
+      summary: Create new Big box
+      tags:
+      - box
+  /signin:
+    post:
+      consumes:
+      - application/json
+      description: Sign in into service
+      parameters:
+      - description: Sign in
+        in: body
+        name: signInRequest
+        required: true
+        schema:
+          $ref: '#/definitions/service.SignInRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/service.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/service.Response'
+      summary: Sign In
+      tags:
+      - security
+swagger: "2.0"

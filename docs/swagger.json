@@ -1,0 +1,275 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Example Box Service",
+        "contact": {},
+        "license": {
+            "name": "ISC"
+        },
+        "version": "1"
+    },
+    "host": "localhost:8080",
+    "basePath": "/api/v1",
+    "paths": {
+        "/boxes": {
+            "get": {
+                "description": "Returns a list of boxes",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "box"
+                ],
+                "summary": "List all boxes",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/service.BoxesResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/service.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "creates new box",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "box"
+                ],
+                "summary": "Create new box",
+                "parameters": [
+                    {
+                        "description": "New Box Request",
+                        "name": "boxRequest",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/service.BoxRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/service.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/service.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/boxes/big": {
+            "post": {
+                "description": "creates new Big box",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "box"
+                ],
+                "summary": "Create new Big box",
+                "parameters": [
+                    {
+                        "description": "New Big Box Request",
+                        "name": "boxRequest",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/service.BigBoxRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/service.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/service.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/signin": {
+            "post": {
+                "description": "Sign in into service",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "security"
+                ],
+                "summary": "Sign In",
+                "parameters": [
+                    {
+                        "description": "Sign in",
+                        "name": "signInRequest",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/service.SignInRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/service.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/service.Response"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "service.BigBoxRequest": {
+            "type": "object",
+            "properties": {
+                "boxes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/service.Box"
+                    }
+                },
+                "if": {
+                    "type": "object",
+                    "properties": {
+                        "are": {
+                            "type": "object",
+                            "properties": {
+                                "scary": {
+                                    "type": "string"
+                                },
+                                "some": {
+                                    "type": "boolean"
+                                },
+                                "stuff": {
+                                    "type": "object",
+                                    "properties": {
+                                        "inside": {
+                                            "type": "boolean"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "there": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                "what": {
+                    "type": "string"
+                }
+            }
+        },
+        "service.Box": {
+            "type": "object",
+            "properties": {
+                "createdAt": {
+                    "type": "string",
+                    "example": "2021-01-01T20:52:41.483612611Z"
+                },
+                "isFragile": {
+                    "type": "boolean",
+                    "example": true
+                },
+                "price": {
+                    "type": "number",
+                    "example": 1.23
+                }
+            }
+        },
+        "service.BoxRequest": {
+            "type": "object",
+            "properties": {
+                "isFragile": {
+                    "type": "boolean",
+                    "example": true
+                },
+                "price": {
+                    "type": "number",
+                    "example": 1.23
+                }
+            }
+        },
+        "service.BoxesResponse": {
+            "type": "object",
+            "properties": {
+                "boxes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/service.Box"
+                    }
+                }
+            }
+        },
+        "service.Response": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "string",
+                    "example": "internalError"
+                },
+                "status": {
+                    "type": "string",
+                    "example": "success"
+                }
+            }
+        },
+        "service.SignInRequest": {
+            "type": "object",
+            "properties": {
+                "password": {
+                    "type": "string",
+                    "example": "password"
+                },
+                "username": {
+                    "type": "string",
+                    "example": "demo"
+                }
+            }
+        }
+    }
+}
